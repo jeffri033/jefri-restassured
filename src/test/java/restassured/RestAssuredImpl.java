@@ -7,15 +7,15 @@ import io.restassured.specification.RequestSpecification;
 
 public class RestAssuredImpl {
     public static void main(String[] args) {
-        //getAllProducts();
-        //getSingleProduct();
-        //getProductsByIds();
+        getAllProducts();
+        getSingleProduct();
+        getProductsByIds();
         //searchProduct();
-        //addProduct();
+        addProduct();
 
-        //updateProduct();
+        updateProduct();
         updatePartialProduct();
-        //deleteProduct();
+        deleteProduct();
     }
 
 
