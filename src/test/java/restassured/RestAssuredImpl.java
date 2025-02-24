@@ -115,9 +115,7 @@ public class RestAssuredImpl {
          * 'https://api.restful-api.dev/objects?id=3&id=5&id=10'
          */
 
-        String token;
-
-        token = auth();
+       
 
 
          RestAssured.baseURI = "https://api.restful-api.dev";
