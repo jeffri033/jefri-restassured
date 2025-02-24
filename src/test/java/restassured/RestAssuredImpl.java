@@ -19,6 +19,9 @@ public class RestAssuredImpl {
     }
 
 
+    // branch submission-json-validation
+    // implementation POJO
+
     public static String auth(){
 
         String token;
