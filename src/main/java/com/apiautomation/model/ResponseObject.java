@@ -41,6 +41,16 @@ public class ResponseObject {
     @JsonProperty("createdAt")
     public String createdAt;
 
+    @JsonProperty("updatedAt")
+    public String updatedAt;
+
+    @JsonProperty("message")
+    public String message;
+
+    @JsonProperty("error")
+    public String error;
+
+
     public class DataItem{
         @JsonProperty("year")
         public int year;

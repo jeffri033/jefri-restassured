@@ -59,6 +59,8 @@ public class ValidationTest {
                             .contentType("application/json")
                             .when()
                                 .post("{path}/{method}");
+
+
         System.out.println("add product" + response.asPrettyString());
         /*
          * Response :
@@ -105,17 +107,24 @@ public class ValidationTest {
 
     }
 
+
+
+
+
+// TASK IMPLEMENTATION POJO: ADD NEW OBJECT
+
     @Test
     public void createObject(){
-        String json = "{\n" + //
-                        "   \"name\": \"Apple MacBook Pro 16\",\n" + //
-                        "   \"data\": {\n" + //
-                        "      \"year\": 2019,\n" + //
-                        "      \"price\": 20000,\n" + //
-                        "      \"CPU model\": \"Intel Core i9\",\n" + //
-                        "      \"Hard disk size\": \"1 TB\"\n" + //
-                        "   }\n" + //
-                        "}";
+        String json = "{\r\n" + //
+                        "   \"name\": \"Laptop Testing\",\r\n" + //
+                        "   \"data\": {\r\n" + //
+                        "      \"year\": 2025,\r\n" + //
+                        "      \"price\": 7599000,\r\n" + //
+                        "      \"CPU model\": \"Intel Core i5\",\r\n" + //
+                        "      \"Hard disk size\": \"1 TB\"\r\n" + //
+                        "   }\r\n" + //
+                        "}\r\n" + //
+                        "";
 
         RestAssured.baseURI = "https://api.restful-api.dev";
         RequestSpecification requestSpecification = RestAssured
@@ -129,74 +138,203 @@ public class ValidationTest {
                             .contentType("application/json")
                             .when()
                                 .post("{path}");
+
+
         System.out.println("Response API" + response.asPrettyString());
 
         /*
          * {
-            "id": "ff808181932badb6019513f5bb1844ba",
-            "title": "Apple MacBook Pro 16",
-            "createdAt": "2025-02-17T12:50:26.200+00:00",
-            "data": {
-                "year": 2019,
-                "price": 1849.99,
-                "CPU model": "Intel Core i9",
-                "Hard disk size": "1 TB",
-                "object":[{
-                    "year1": 2019,
-                    "price1": 1849.99,
-                    "CPU model1": "Intel Core i9",
-                    "Hard disk size1": "1 TB",
-                },
-                {
-                    "year1": 2019,
-                    "price1": 1849.99,
-                    "CPU model1": "Intel Core i9",
-                    "Hard disk size1": "1 TB",
-                },
-                {
-                    "year1": 2019,
-                    "price1": 1849.99,
-                    "CPU model1": "Intel Core i9",
-                    "Hard disk size1": "1 TB",
-                }]
+                "id": "ff808181932badb60195398158921242",
+                "name": "Laptop Testing",
+                "createdAt": "2025-02-24T18:06:01.347+00:00",
+                "data": {
+                    "year": 2025,
+                    "price": 7599000,
+                    "CPU model": "Intel Core i5",
+                    "Hard disk size": "1 TB"
+                }
             }
-        }
-            String year1 = jsonPath.getString("data.object.year1");
          */
 
+
+        // VALIDATION RESPONSE
+        
         JsonPath jsonPath = response.jsonPath();
         
-        //Cara Pertama
-        String id = jsonPath.getString("id");
-        String name = jsonPath.getString("title");
-        String createdAt = jsonPath.getString("createdAt");
-        int year = jsonPath.getInt("data.year");
-        int price = jsonPath.getInt("data.price");
-        String cpuModel = jsonPath.getString("data.'CPU model'");
-        String harddisk = jsonPath.getString("data.'Hard disk size'");
-
-        Assert.assertEquals(name, "Apple MacBook Pro 16");
-        Assert.assertNotNull(createdAt);
-        Assert.assertNotNull(id);
-        Assert.assertEquals(year, 2019);
-        Assert.assertEquals(price, 20000);
-        Assert.assertEquals(cpuModel, "Intel Core i9");
-        Assert.assertEquals(harddisk, "1 TB");
-
-
-
-        // Cara Kedua pakai POJO
         responseObject = jsonPath.getObject("", ResponseObject.class);
 
-        Assert.assertEquals(responseObject.name, "Apple MacBook Pro 16");
+        Assert.assertEquals(responseObject.name, "Laptop Testing");
         Assert.assertNotNull(responseObject.createdAt);
         Assert.assertNotNull(responseObject.id);
-        Assert.assertEquals(responseObject.dataItem.year, 2019);
-        Assert.assertEquals(responseObject.dataItem.price, 20000);
-        Assert.assertEquals(responseObject.dataItem.cpuModel, "Intel Core i9");
+        Assert.assertEquals(responseObject.dataItem.year, 2025);
+        Assert.assertEquals(responseObject.dataItem.price, 7599000);
+        Assert.assertEquals(responseObject.dataItem.cpuModel, "Intel Core i5");
         Assert.assertEquals(responseObject.dataItem.hardDiskSize, "1 TB");
     }
 
+
+
+
+
+
+// TASK IMPLEMENTATION POJO: GET SINGLE OBJECT
+
+@Test
+public void getSingleObject(){
+    RestAssured.baseURI = "https://api.restful-api.dev";
+
+    RequestSpecification requestSpecification = RestAssured
+                                                 .given();
+
+    Response response = requestSpecification
+                            .log()
+                            .all()
+                            .pathParam("idProduct", "ff808181932badb60195398158921242")
+                            .pathParam("path", "objects")
+                        .when()
+                            .get("{path}/{idProduct}");
+
+
+    System.out.println("Response Get Single Object " + response.asPrettyString());
+
+    /*         
+     {
+        "id": "ff808181932badb60195398158921242",
+        "name": "Laptop Testing",
+        "data": {
+            "year": 2025,
+            "price": 7599000,
+            "CPU model": "Intel Core i5",
+            "Hard disk size": "1 TB"
+        }
+    }        
+    */
+
+
+
+    // VALIDATION RESPONSE
+            
+    JsonPath jsonPath = response.jsonPath();
+            
+    responseObject = jsonPath.getObject("", ResponseObject.class);
+
+    Assert.assertEquals(responseObject.name, "Laptop Testing");
+    Assert.assertNotNull(responseObject.id);
+    Assert.assertEquals(responseObject.dataItem.year, 2025);
+    Assert.assertEquals(responseObject.dataItem.price, 7599000);
+    Assert.assertEquals(responseObject.dataItem.cpuModel, "Intel Core i5");
+    Assert.assertEquals(responseObject.dataItem.hardDiskSize, "1 TB");
+}
+
+
+
+
+
+
+// TASK IMPLEMENTATION POJO: UPDATE OBJECT
+
+@Test
+public void updateObject(){
+    String json = "{\r\n" + //
+                "        \"id\": \"ff808181932badb60195398158921242\",\r\n" + //
+                "        \"name\": \"Laptop Testing Update\",\r\n" + //
+                "        \"data\": {\r\n" + //
+                "            \"year\": 2024,\r\n" + //
+                "            \"price\": 8599000,\r\n" + //
+                "            \"CPU model\": \"Intel Core i7\",\r\n" + //
+                "            \"Hard disk size\": \"2 TB\"\r\n" + //
+                "        }\r\n" + //
+                "    }";
+
+    RestAssured.baseURI = "https://api.restful-api.dev";
+
+    RequestSpecification requestSpecification = RestAssured
+                                                 .given();
+      
+      
+    Response response = requestSpecification
+                            .log()
+                            .all()
+                            .pathParam("path", "objects")
+                            .pathParam("idProduct", "ff808181932badb60195398158921242")
+                            .body(json)
+                            .contentType("application/json")
+                            .when()
+                                .put("{path}/{idProduct}");
+
+    System.out.println("Update Object" + response.asPrettyString());
+
+    /*         
+        {
+            "id": "ff808181932badb60195398158921242",
+            "name": "Laptop Testing Update",
+            "updatedAt": "2025-02-24T18:45:22.010+00:00",
+            "data": {
+                "year": 2024,
+                "price": 8599000,
+                "CPU model": "Intel Core i7",
+                "Hard disk size": "2 TB"
+            }
+        }        
+    */
+
+
+
+    // VALIDATION RESPONSE
+            
+    JsonPath jsonPath = response.jsonPath();
+            
+    responseObject = jsonPath.getObject("", ResponseObject.class);
+
+    Assert.assertEquals(responseObject.name, "Laptop Testing Update");
+    Assert.assertNotNull(responseObject.id);
+    Assert.assertNotNull(responseObject.updatedAt);
+    Assert.assertEquals(responseObject.dataItem.year, 2024);
+    Assert.assertEquals(responseObject.dataItem.price, 8599000);
+    Assert.assertEquals(responseObject.dataItem.cpuModel, "Intel Core i7");
+    Assert.assertEquals(responseObject.dataItem.hardDiskSize, "2 TB");
+}
+
+
+
+
+
+// TASK IMPLEMENTATION POJO: DELETE OBJECT
+
+@Test
+public void deleteObject(){
+    RestAssured.baseURI = "https://api.restful-api.dev";
+
+    RequestSpecification requestSpecification = RestAssured
+                                                .given();
+
+    Response response = requestSpecification
+                        .log()
+                        .all()
+                        .pathParam("path", "objects")
+                        .pathParam("idProduct", "ff808181932badb60195398158921242")
+                        .contentType("application/json")
+                        .when()
+                            .delete("{path}/{idProduct}");
+                            
+    System.out.println("Delete Object" + response.asPrettyString());
+
+    /*
+        {
+            "message": "Object with id = ff808181932badb60195398158921242 has been deleted."
+        }  
+    */
+
+
+     // VALIDATION RESPONSE
+            
+     JsonPath jsonPath = response.jsonPath();
+            
+     responseObject = jsonPath.getObject("", ResponseObject.class);
+ 
+     Assert.assertNotNull(responseObject.message);
+     Assert.assertEquals(responseObject.message, "Object with id = ff808181932badb60195398158921242 has been deleted.");
+}
 
 
     /*

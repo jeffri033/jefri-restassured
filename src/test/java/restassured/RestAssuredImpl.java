@@ -1,6 +1,9 @@
 package restassured;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.apiautomation.model.ResponseObject;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
