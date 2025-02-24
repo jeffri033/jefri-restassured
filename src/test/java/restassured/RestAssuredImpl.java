@@ -139,29 +139,6 @@ public class RestAssuredImpl {
     }
 
 
-
-
-    // public static void searchProduct(){
-    //     /*
-    //      * 'https://api.restful-api.dev/objects?q=google'
-    //      */
-    //     RestAssured.baseURI = "https://api.restful-api.dev";
-    //     RequestSpecification requestSpecification = RestAssured
-    //                                                 .given();
-
-    //      Response response = requestSpecification
-    //                             .log()
-    //                             .all()
-    //                             .pathParam("path", "objects")
-    //                             //.pathParam("method", "search")
-    //                             .queryParam("q","google")
-    //                             .when()
-    //                                 .get("{path}/{method}");
-    //     System.out.println("Ini adalah hasil search" + response.asPrettyString());           
-    // }
-
-
-
     public static void addProduct(){
 
         String json = "{\r\n" + //
