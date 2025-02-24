@@ -1,5 +1,7 @@
 package restassured;
 
+import org.testng.annotations.Test;
+
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -238,6 +240,5 @@ public class RestAssuredImpl {
                             .when()
                                 .delete("{path}/{idProduct}");
         System.out.println("delete product" + response.asPrettyString());
-
     }
 }
