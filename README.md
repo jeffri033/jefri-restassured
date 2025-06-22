@@ -9,7 +9,7 @@ Implementation Rest Assured - After office bootcamp
 To clone the repository, run:
 
 ```sh
-git clone https://github.com/simanjuntakalbert57/apiautomationbatch2.git
+git clone https://github.com/jeffri033/jefri-restassured.git
 cd apiautomationbatch2
 ```
 
