@@ -10,7 +10,6 @@ To clone the repository, run:
 
 ```sh
 git clone https://github.com/jeffri033/jefri-restassured.git
-cd apiautomationbatch2
 ```
 
 ### Pulling Latest Changes
